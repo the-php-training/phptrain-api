@@ -1,0 +1,57 @@
+networks:
+  ptrain-api-network:
+    driver: bridge
+    ipam:
+      driver: default
+
+services:
+  ptrain-api-nginx:
+    container_name: ptrain-api-nginx
+    image: nginx
+    ports:
+      - '8080:80'
+    depends_on:
+      - ptrain-api
+    volumes:
+      - ./main:/var/www
+      - ./docker/nginx/app.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - ptrain-api-network
+
+  ptrain-api:
+    container_name: ptrain-api
+    build:
+      context: docker
+      dockerfile: app.Dockerfile
+    image: ptrain-api
+    ports:
+      - '9000:9000'
+    volumes:
+      - ./main:/var/www
+    networks:
+      - ptrain-api-network
+
+  ptrain-api-db:
+    container_name: ptrain-api-db
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: ptrain-api
+    ports:
+      - '3306:3306'
+    volumes:
+      - ptrain-api-db-volume:/var/lib/mysql
+    networks:
+      - ptrain-api-network
+
+  ptrain-api-redis:
+    container_name: ptrain-api-redis
+    image: redis:alpine
+    restart: unless-stopped
+    ports:
+      - '6379:6379'
+    networks:
+      - ptrain-api-network
+
+volumes:
+  ptrain-api-db-volume:
