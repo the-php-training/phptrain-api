@@ -1,15 +1,23 @@
 # Variables
-DC=docker compose --file docker-compose.yml --env-file ./main/.env
+DC=USERID=$(USERID) GROUPID=$(GROUPID) docker compose --file docker-compose.yml --env-file ./src/.env
 
 .PHONY: up down sh logs setup test migrate rollback horizon app-log
 
-up:
-	$(DC) up -d --build
+USERID := $(shell id -u)
+GROUPID := $(shell id -g)
+
+show-vars:
+	@echo "USERID: $(USERID)"
+	@echo "GROUPID: $(GROUPID)"
+
+go: stop build
+	$(DC) up
 	$(DC) exec ptrain-api composer install
 
-setup: up
+build:
+	$(DC) build
 
-down:
+stop:
 	$(DC) down
 
 sh:

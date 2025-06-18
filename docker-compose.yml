@@ -5,31 +5,33 @@ networks:
       driver: default
 
 services:
-  ptrain-api-nginx:
-    container_name: ptrain-api-nginx
-    image: nginx
-    ports:
-      - '8080:80'
-    depends_on:
-      - ptrain-api
-    volumes:
-      - ./main:/var/www
-      - ./docker/nginx/app.conf:/etc/nginx/conf.d/default.conf
-    networks:
-      - ptrain-api-network
-
   ptrain-api:
     container_name: ptrain-api
     build:
       context: docker
       dockerfile: app.Dockerfile
-    image: ptrain-api
-    ports:
-      - '9000:9000'
+      args:
+        USERID: ${USERID}
+        GROUPID: ${GROUPID}
+    command: [ "php", "/var/www/bin/hyperf.php", "start" ]
     volumes:
-      - ./main:/var/www
+      - ./src:/var/www
+    ports:
+      - '8080:80'
+    expose:
+      - '8080'
     networks:
       - ptrain-api-network
+    depends_on:
+      - ptrain-api-db
+      - ptrain-api-redis
+    environment:
+      - TZ=America/Sao_Paulo
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:9501" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
   ptrain-api-db:
     container_name: ptrain-api-db
