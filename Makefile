@@ -11,7 +11,7 @@ show-vars:
 	@echo "GROUPID: $(GROUPID)"
 
 go: stop build
-	$(DC) up
+	$(DC) up -d
 	$(DC) exec ptrain-api composer install
 
 build:
