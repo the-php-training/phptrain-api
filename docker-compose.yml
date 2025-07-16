@@ -17,9 +17,9 @@ services:
     volumes:
       - ./src:/var/www
     ports:
-      - '8080:80'
+      - '8087:80'
     expose:
-      - '8080'
+      - '8087'
     networks:
       - ptrain-api-network
     depends_on:
@@ -28,7 +28,7 @@ services:
     environment:
       - TZ=America/Sao_Paulo
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:9501" ]
+      test: [ "CMD", "curl", "-f", "http://localhost:8087" ]
       interval: 10s
       timeout: 5s
       retries: 3
@@ -40,7 +40,7 @@ services:
       MYSQL_ROOT_PASSWORD: secret
       MYSQL_DATABASE: ptrain-api
     ports:
-      - '3306:3306'
+      - '3376:3306'
     volumes:
       - ptrain-api-db-volume:/var/lib/mysql
     networks:

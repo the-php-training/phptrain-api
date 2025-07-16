@@ -10,12 +10,9 @@ show-vars:
 	@echo "USERID: $(USERID)"
 	@echo "GROUPID: $(GROUPID)"
 
-go: stop build
-	$(DC) up -d
-	$(DC) exec ptrain-api composer install
-
-build:
-	$(DC) build
+go: stop
+	$(DC) run ptrain-api composer install
+	$(DC) up -d --build
 
 stop:
 	$(DC) down
