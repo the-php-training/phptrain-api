@@ -1,0 +1,16 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Application\Tenant\Query;
+
+/**
+ * Query to retrieve a Tenant by ID
+ */
+final readonly class GetTenantQuery
+{
+    public function __construct(
+        public string $tenantId,
+    ) {
+    }
+}
