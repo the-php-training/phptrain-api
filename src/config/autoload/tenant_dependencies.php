@@ -8,8 +8,8 @@ declare(strict_types=1);
  * Maps interfaces to concrete implementations for dependency injection
  */
 
-use App\Domain\Tenant\Repository\TenantRepositoryInterface;
-use App\Infrastructure\Persistence\Repository\TenantRepository;
+use Tenant\Domain\Repository\TenantRepositoryInterface;
+use Tenant\Infrastructure\Persistence\Repository\TenantRepository;
 
 return [
     TenantRepositoryInterface::class => TenantRepository::class,

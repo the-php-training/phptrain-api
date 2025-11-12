@@ -9,11 +9,13 @@ declare(strict_types=1);
  * @contact  group@hyperf.io
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
-return [
-    'handler' => [
-        'http' => [
-            Hyperf\HttpServer\Exception\Handler\HttpExceptionHandler::class,
-            Shared\Exception\Handler\AppExceptionHandler::class,
-        ],
-    ],
-];
+
+namespace Shared\Infrastructure\Process;
+
+use Hyperf\AsyncQueue\Process\ConsumerProcess;
+use Hyperf\Process\Annotation\Process;
+
+#[Process]
+class AsyncQueueConsumer extends ConsumerProcess
+{
+}
