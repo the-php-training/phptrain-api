@@ -1,0 +1,171 @@
+{
+	"info": {
+		"_postman_id": "phptrain-api-collection",
+		"name": "PHPTrain API - DDD Implementation",
+		"description": "Complete API collection for PHPTrain API with Domain-Driven Design implementation.\n\nIncludes endpoints for:\n- Tenant Management\n- Student Enrollment (StudentLearning Context)\n\nBase URL: http://localhost:9501",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Tenant Management",
+			"item": [
+				{
+					"name": "Create Tenant",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Acme University\",\n  \"slug\": \"acme-university\",\n  \"contact_email\": \"admin@acme.edu\",\n  \"contact_phone\": \"+1-555-0100\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/tenants",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"tenants"
+							]
+						},
+						"description": "Create a new tenant (organization/institution).\n\n**Bounded Context**: TenantManagement\n\n**Request Body**:\n- `name` (required, min:3, max:255): Tenant name\n- `slug` (required, min:3, max:50, regex): URL-friendly identifier\n- `contact_email` (required, email): Contact email address\n- `contact_phone` (optional, max:20): Contact phone number\n\n**Response (201 Created)**:\n```json\n{\n  \"success\": true,\n  \"message\": \"Tenant created successfully\",\n  \"data\": {\n    \"id\": \"uuid\",\n    \"name\": \"Acme University\",\n    \"slug\": \"acme-university\",\n    \"contact_email\": \"admin@acme.edu\",\n    \"contact_phone\": \"+1-555-0100\",\n    \"status\": \"pending\",\n    \"created_at\": \"2025-01-15T10:30:00Z\",\n    \"updated_at\": \"2025-01-15T10:30:00Z\"\n  }\n}\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Tenant by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/tenants/{{tenant_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"tenants",
+								"{{tenant_id}}"
+							]
+						},
+						"description": "Retrieve a specific tenant by ID.\n\n**Bounded Context**: TenantManagement\n\n**Path Parameters**:\n- `id` (required, uuid): Tenant ID\n\n**Response (200 OK)**:\n```json\n{\n  \"success\": true,\n  \"data\": {\n    \"id\": \"uuid\",\n    \"name\": \"Acme University\",\n    \"slug\": \"acme-university\",\n    \"contact_email\": \"admin@acme.edu\",\n    \"contact_phone\": \"+1-555-0100\",\n    \"status\": \"active\",\n    \"created_at\": \"2025-01-15T10:30:00Z\",\n    \"updated_at\": \"2025-01-15T10:30:00Z\"\n  }\n}\n```\n\n**Response (404 Not Found)**:\n```json\n{\n  \"success\": false,\n  \"message\": \"Tenant not found\"\n}\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "List Tenants",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/tenants?limit=20&offset=0",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"tenants"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "20",
+									"description": "Number of items per page (max: 100)"
+								},
+								{
+									"key": "offset",
+									"value": "0",
+									"description": "Number of items to skip"
+								}
+							]
+						},
+						"description": "List all tenants with pagination.\n\n**Bounded Context**: TenantManagement\n\n**Query Parameters**:\n- `limit` (optional, default: 20, max: 100): Items per page\n- `offset` (optional, default: 0): Items to skip\n\n**Response (200 OK)**:\n```json\n{\n  \"success\": true,\n  \"data\": [\n    {\n      \"id\": \"uuid\",\n      \"name\": \"Acme University\",\n      \"slug\": \"acme-university\",\n      \"contact_email\": \"admin@acme.edu\",\n      \"status\": \"active\",\n      \"created_at\": \"2025-01-15T10:30:00Z\"\n    }\n  ],\n  \"pagination\": {\n    \"total\": 50,\n    \"limit\": 20,\n    \"offset\": 0\n  }\n}\n```"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints for managing tenants (organizations/institutions).\n\n**Bounded Context**: TenantManagement\n\nTenants represent organizations that use the platform to manage courses."
+		},
+		{
+			"name": "Student Enrollment",
+			"item": [
+				{
+					"name": "Enroll Student in Course",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"course_id\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"student_id\": \"987fcdeb-51a2-43d7-8f12-123456789abc\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/enrollments",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"enrollments"
+							]
+						},
+						"description": "Enroll a student in a course.\n\n**Bounded Context**: StudentLearning (triggers CourseManagement)\n\n**What This Does**:\n1. Grants student learning access to course materials (StudentLearning context)\n2. Creates administrative enrollment record (CourseManagement context)\n3. Both happen synchronously in the same request\n\n**Request Body**:\n- `course_id` (required, uuid): Course ID\n- `student_id` (required, uuid): Student ID\n\n**Response (201 Created)**:\n```json\n{\n  \"success\": true,\n  \"message\": \"Student successfully enrolled in course\",\n  \"data\": {\n    \"course_id\": \"123e4567-e89b-12d3-a456-426614174000\",\n    \"student_id\": \"987fcdeb-51a2-43d7-8f12-123456789abc\",\n    \"status\": \"enrolled\"\n  }\n}\n```\n\n**Response (400 Bad Request) - Already Enrolled**:\n```json\n{\n  \"success\": false,\n  \"message\": \"Student already has learning access to this course\"\n}\n```\n\n**Response (400 Bad Request) - Course Full**:\n```json\n{\n  \"success\": false,\n  \"message\": \"Course is at capacity. No more learners can be accepted (max: 100)\"\n}\n```\n\n**Response (400 Bad Request) - Not Found**:\n```json\n{\n  \"success\": false,\n  \"message\": \"Student {id} not found\"\n}\n```\n\n**Response (422 Unprocessable Entity) - Validation Error**:\n```json\n{\n  \"success\": false,\n  \"message\": \"Validation failed\",\n  \"errors\": {\n    \"course_id\": [\"The course_id field is required.\"],\n    \"student_id\": [\"The student_id must be a valid UUID.\"]\n  }\n}\n```"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints for student enrollment in courses.\n\n**Bounded Context**: StudentLearning\n\nEnrollment from the student's learning perspective - grants access to course materials and triggers administrative record creation."
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:9501",
+			"type": "string"
+		},
+		{
+			"key": "tenant_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "course_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "student_id",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

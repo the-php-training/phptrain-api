@@ -12,7 +12,10 @@ declare(strict_types=1);
 return [
     'scan' => [
         'paths' => [
-            BASE_PATH . '/app',
+            BASE_PATH . '/modules/Shared',
+            BASE_PATH . '/modules/StudentLearning',
+            BASE_PATH . '/modules/TenantManagement',
+            BASE_PATH . '/modules/CourseManagement',
         ],
         'ignore_annotations' => [
             'mixin',
