@@ -8,7 +8,7 @@ This project is a scalable, multi-tenant online learning platform built with [Hy
 
 | Layer     | Stack/Tools                                 |
 |-----------|----------------------------------------------|
-| Backend   | **HyPerf 3.1**, PHP **8.3**, Swoole          |
+| Backend   | **HyPerf 3.1**, PHP **8.4**, Swoole          |
 | Frontend  | Nuxt by Vue.js (with Firebase or Cloudflare) |
 | Database  | MySQL 8 (via Docker)                         |
 | Caching   | Redis (async-queue)                          |
@@ -51,34 +51,52 @@ This project is a scalable, multi-tenant online learning platform built with [Hy
 
 - Docker + Docker Compose
 - `make` (optional but recommended)
-- `.env` file with the following (or use exported shell vars):
+### Quick Start
 
-```env
-UID=1000
-GID=1000
-```
+1. **Copy the environment file:**
+   ```bash
+   cp src/.env.example src/.env
+   ```
 
-### Commands
+2. **Start the application:**
+   ```bash
+   make go
+   ```
+
+   This command will:
+   - Stop any existing containers
+   - Install Composer dependencies
+   - Build and start containers
+   - Run database migrations
+   - Display the API URL
+
+3. **Access the API:**
+   ```
+   http://localhost:9501
+   ```
+
+### Common Commands
 
 ```bash
-make go          # build + up + composer install
-make sh          # open shell in backend container
-make test        # run tests
-make logs        # follow logs
-make stop        # stop all containers
+make go          # Full setup (install + build + start + migrate)
+make up          # Start containers
+make down        # Stop containers
+make restart     # Restart containers
+make sh          # Open shell in backend container
+make logs        # Follow container logs
+make log         # Follow application logs
+make test        # Run tests
+
+# Database commands
+make db-migrate          # Run migrations
+make db-rollback         # Rollback last migration
+make db-seed             # Run database seeders
+
+# Cache & cleanup
+make cache-clear         # Clear Hyperf cache
+make autoload            # Regenerate autoload files
 ```
 
----
-
-## 📚 Work Log
-
-### 📅 18/06/2025
-
-- ✅ Generated a new **HyPerf** project using the official Docker image: `hyperf/hyperf:8.3-alpine-swoole`
-- ⚙️ PHP version: **8.3**
-- 🔐 Configured **user permissions** in Docker using `USERID` and `GROUPID` as build arguments
-- 👤 Set up a **non-root user** inside the HyPerf container for secure execution
-- 🌐 Created and tested a **"Hello World" endpoint** served by the **Swoole HTTP server**
 
 ---
 

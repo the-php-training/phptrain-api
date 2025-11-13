@@ -77,7 +77,7 @@ logs:
 
 # Application commands
 install:
-	$(DC) run --rm ptrain-api composer install
+	$(DC) run --rm ptrain-api composer install --ignore-platform-req=php
 	@echo "✅ Composer dependencies installed"
 
 autoload:

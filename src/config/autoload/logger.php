@@ -9,19 +9,26 @@ declare(strict_types=1);
  * @contact  group@hyperf.io
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
+
+use Monolog\Handler\RotatingFileHandler;
+use Monolog\Handler\StreamHandler;
+use Monolog\Formatter\LineFormatter;
+use Monolog\Logger;
+
 return [
     'default' => [
         'handler' => [
-            'class' => Monolog\Handler\StreamHandler::class,
+            'class' => RotatingFileHandler::class,
             'constructor' => [
-                'stream' => BASE_PATH . '/runtime/logs/hyperf.log',
-                'level' => Monolog\Logger::DEBUG,
+                'filename' => BASE_PATH . '/runtime/logs/hyperf.log',
+                'maxFiles' => 14, // Keep 14 days of logs like Laravel
+                'level' => Logger::DEBUG,
             ],
         ],
         'formatter' => [
-            'class' => Monolog\Formatter\LineFormatter::class,
+            'class' => LineFormatter::class,
             'constructor' => [
-                'format' => null,
+                'format' => "[%datetime%] %channel%.%level_name%: %message% %context% %extra%\n",
                 'dateFormat' => 'Y-m-d H:i:s',
                 'allowInlineLineBreaks' => true,
             ],

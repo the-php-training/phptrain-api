@@ -1,4 +1,4 @@
-FROM hyperf/hyperf:8.3-alpine-v3.21-swoole-v6.0.2
+FROM hyperf/hyperf:8.4-alpine-v3.21-swoole
 
 LABEL maintainer="PHP Training Developers <hello@php.training>" version="1.0" license="MIT" app.name="PHP_Training"
 
@@ -17,7 +17,7 @@ RUN set -ex \
     && php -m \
     && php --ri swoole \
     #  ---------- some config ----------
-    && cd /etc/php83 \
+    && cd /etc/php84 \
     # - config PHP
     && { \
         echo "upload_max_filesize=128M"; \
