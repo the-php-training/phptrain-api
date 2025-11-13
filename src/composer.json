@@ -13,9 +13,13 @@
     "license": "Apache-2.0",
     "require": {
         "php": ">=8.3",
+        "hyperf/amqp": "~3.1.0",
+        "hyperf/async-queue": "~3.1.0",
         "hyperf/cache": "~3.1.0",
         "hyperf/command": "~3.1.0",
         "hyperf/config": "~3.1.0",
+        "hyperf/constants": "~3.1.0",
+        "hyperf/database": "~3.1.0",
         "hyperf/db-connection": "~3.1.0",
         "hyperf/engine": "^2.10",
         "hyperf/framework": "~3.1.0",
@@ -23,14 +27,12 @@
         "hyperf/http-server": "~3.1.0",
         "hyperf/logger": "~3.1.0",
         "hyperf/memory": "~3.1.0",
-        "hyperf/process": "~3.1.0",
-        "hyperf/database": "~3.1.0",
-        "hyperf/redis": "~3.1.0",
-        "hyperf/constants": "~3.1.0",
-        "hyperf/async-queue": "~3.1.0",
-        "hyperf/amqp": "~3.1.0",
         "hyperf/model-cache": "~3.1.0",
-        "hyperf/tracer": "~3.1.0"
+        "hyperf/process": "~3.1.0",
+        "hyperf/redis": "~3.1.0",
+        "hyperf/tracer": "~3.1.0",
+        "hyperf/validation": "^3.1",
+        "ramsey/uuid": "^4.9"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.0",
@@ -49,8 +51,11 @@
     },
     "autoload": {
         "psr-4": {
-            "Tenant\\": "modules/Tenant/",
-            "Shared\\": "modules/Shared/"
+            "Shared\\": "modules/Shared/",
+            "Tenant\\": "modules/TenantManagement/",
+            "TenantManagement\\": "modules/TenantManagement/",
+            "StudentLearning\\": "modules/StudentLearning/",
+            "CourseManagement\\": "modules/CourseManagement/"
         },
         "files": []
     },
