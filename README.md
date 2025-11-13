@@ -1,4 +1,4 @@
-# 🎓 Online Learning Platform — Backend (HyPerf + Docker)
+# PHP Training - Online Learning Platform - Backend (HyPerf + Docker)
 
 This project is a scalable, multi-tenant online learning platform built with [HyPerf](https://hyperf.io/) and powered by a containerized infrastructure using Docker. It includes support for i18n, async jobs, secure API access, content delivery, and user certification management.
 
@@ -30,18 +30,6 @@ This project is a scalable, multi-tenant online learning platform built with [Hy
 - Dark/Light theme toggle on frontend
 - Firebase or Cloudflare hosting support
 - Docker-ready for local + production environments
-
----
-
-## 🧱 Domain Model
-
-![Domain Model](./docs/images/domain-model.png)
-
----
-
-## ☁️ Production Infrastructure
-
-![Production Infrastructure](./docs/images/production-infrastructure.png)
 
 ---
 
@@ -96,7 +84,6 @@ make db-seed             # Run database seeders
 make cache-clear         # Clear Hyperf cache
 make autoload            # Regenerate autoload files
 ```
-
 
 ---
 
