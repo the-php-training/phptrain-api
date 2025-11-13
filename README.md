@@ -60,7 +60,7 @@ This project is a scalable, multi-tenant online learning platform built with [Hy
 
 3. **Access the API:**
    ```
-   http://localhost:9501
+   http://localhost:8087
    ```
 
 ### Common Commands
@@ -84,6 +84,43 @@ make db-seed             # Run database seeders
 make cache-clear         # Clear Hyperf cache
 make autoload            # Regenerate autoload files
 ```
+
+---
+
+## 📮 API Testing with Postman
+
+A complete Postman collection is available at `docs/postman_collection.json` with all API endpoints documented and ready to use.
+
+### Available Endpoints
+
+**Tenant Management**
+- `POST /api/tenants` - Create a new tenant
+- `GET /api/tenants` - List all tenants (with pagination)
+- `GET /api/tenants/{id}` - Get tenant by ID
+
+**Student Enrollment**
+- `POST /api/enrollments` - Enroll student in course
+
+### Quick Start
+
+1. **Import the collection:**
+   - Open Postman
+   - Click "Import" → Select `docs/postman_collection.json`
+
+2. **Configure variables:**
+   - Base URL is pre-configured: `http://localhost:9501`
+   - Variables: `tenant_id`, `course_id`, `student_id` (automatically populated from responses)
+
+3. **Start testing:**
+   - Ensure containers are running: `make up`
+   - Use the requests in the collection
+
+Each endpoint includes:
+- Complete request examples
+- Detailed descriptions
+- Expected response formats
+- Validation error examples
+- DDD bounded context information
 
 ---
 

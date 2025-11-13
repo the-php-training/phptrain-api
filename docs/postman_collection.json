@@ -1,9 +1,11 @@
 {
 	"info": {
-		"_postman_id": "phptrain-api-collection",
+		"_postman_id": "4e9b7b06-cf78-43fb-bb14-d06f15a23cc2",
 		"name": "PHPTrain API - DDD Implementation",
 		"description": "Complete API collection for PHPTrain API with Domain-Driven Design implementation.\n\nIncludes endpoints for:\n- Tenant Management\n- Student Enrollment (StudentLearning Context)\n\nBase URL: http://localhost:9501",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4785599",
+		"_collection_link": "https://hintify.postman.co/workspace/PHP-Training~47550bba-3bfa-41fa-8bf3-fce2173b7fae/collection/4785599-4e9b7b06-cf78-43fb-bb14-d06f15a23cc2?action=share&source=collection_link&creator=4785599"
 	},
 	"item": [
 		{
@@ -43,14 +45,20 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/api/tenants/{{tenant_id}}",
+							"raw": "{{base_url}}/api/tenants/:tenantId",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"api",
 								"tenants",
-								"{{tenant_id}}"
+								":tenantId"
+							],
+							"variable": [
+								{
+									"key": "tenantId",
+									"value": "88cf6697-8e6c-4742-b19a-ea72f5e9ad1b"
+								}
 							]
 						},
 						"description": "Retrieve a specific tenant by ID.\n\n**Bounded Context**: TenantManagement\n\n**Path Parameters**:\n- `id` (required, uuid): Tenant ID\n\n**Response (200 OK)**:\n```json\n{\n  \"success\": true,\n  \"data\": {\n    \"id\": \"uuid\",\n    \"name\": \"Acme University\",\n    \"slug\": \"acme-university\",\n    \"contact_email\": \"admin@acme.edu\",\n    \"contact_phone\": \"+1-555-0100\",\n    \"status\": \"active\",\n    \"created_at\": \"2025-01-15T10:30:00Z\",\n    \"updated_at\": \"2025-01-15T10:30:00Z\"\n  }\n}\n```\n\n**Response (404 Not Found)**:\n```json\n{\n  \"success\": false,\n  \"message\": \"Tenant not found\"\n}\n```"
@@ -124,6 +132,20 @@
 				}
 			],
 			"description": "Endpoints for student enrollment in courses.\n\n**Bounded Context**: StudentLearning\n\nEnrollment from the student's learning perspective - grants access to course materials and triggers administrative record creation."
+		},
+		{
+			"name": "API ALive",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}",
+					"host": [
+						"{{base_url}}"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [
@@ -131,6 +153,7 @@
 			"listen": "prerequest",
 			"script": {
 				"type": "text/javascript",
+				"requests": {},
 				"exec": [
 					""
 				]
@@ -140,6 +163,7 @@
 			"listen": "test",
 			"script": {
 				"type": "text/javascript",
+				"requests": {},
 				"exec": [
 					""
 				]
@@ -149,23 +173,19 @@
 	"variable": [
 		{
 			"key": "base_url",
-			"value": "http://localhost:9501",
-			"type": "string"
+			"value": "http://localhost:9501"
 		},
 		{
 			"key": "tenant_id",
-			"value": "",
-			"type": "string"
+			"value": ""
 		},
 		{
 			"key": "course_id",
-			"value": "",
-			"type": "string"
+			"value": ""
 		},
 		{
 			"key": "student_id",
-			"value": "",
-			"type": "string"
+			"value": ""
 		}
 	]
 }
